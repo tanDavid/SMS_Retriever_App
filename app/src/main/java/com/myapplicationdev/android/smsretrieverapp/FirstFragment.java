@@ -53,7 +53,7 @@ public class FirstFragment extends Fragment {
                 String[] filterArgs = null;
 
                 if (!tvSMS.getText().toString().isEmpty()) {
-                    filter = "body LIKE ? AND body LIKE ?";
+                    filter = "address LIKE ?";
                     filterArgs = new String[]{"%" + etNumber.getText().toString() + "%"};
                 }
 
