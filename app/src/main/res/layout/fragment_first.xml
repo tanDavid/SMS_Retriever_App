@@ -18,21 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btnRetrieve"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Retrieve SMS" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRetrieve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retrieve SMS" />
+
+        <Button
+            android:id="@+id/btnEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Email" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvSMS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Email" />
 
 </LinearLayout>
