@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 public class FirstFragment extends Fragment {
     EditText etNumber;
     Button btnRetrieve;
@@ -27,43 +26,7 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-        etNumber = view.findViewById(R.id.etNumber);
-        btnRetrieve = view.findViewById(R.id.btnRetrieve);
-        tvSMS = view.findViewById(R.id.tvSMS);
-        btnRetrieve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int permissionCheck = PermissionChecker.checkSelfPermission(FirstFragment.super.getContext(), Manifest.permission.READ_SMS);
 
-                if(permissionCheck != PermissionChecker.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(FirstFragment.super.getActivity(), new String[]{Manifest.permission.READ_SMS}, 0);
-                    return;
-                }
-                Uri uri = Uri.parse("content://sms");
-                String[] reqCols = new String[]{"date", "address", "body", "type"};
-                ContentResolver cr = getActivity().getContentResolver();
-                String filter = "body LIKE ?";
-                String[] filterArgs = {"%" + etNumber.getText().toString() + "%"};
-                Cursor cursor = cr.query(uri, reqCols, filter, filterArgs, null);
-                String smsbody = "";
-                if(cursor.moveToFirst()){
-                    do {
-                        long dateInMillis = cursor.getLong(0);
-                        String date = (String) DateFormat.format("dd MMM yyyy h:mm:ss aa", dateInMillis);
-                        String address = cursor.getString(1);
-                        String body = cursor.getString(2);
-                        String type = cursor.getString(3);
-                        if(type.equalsIgnoreCase("1")) {
-                            type = "Inbox:";
-                        } else {
-                            type = "Sent:";
-                        }
-                        smsbody += type + " " + address + "\nat " + date + "\n\"" + body + "\"\n\n";
-                    } while (cursor.moveToNext());
-                }
-                tvSMS.setText(smsbody);
-            }
-        });
         return view;
     }
 
