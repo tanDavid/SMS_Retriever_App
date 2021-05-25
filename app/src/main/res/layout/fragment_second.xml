@@ -4,17 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#BBFFFF"
-    tools:context=".FirstFragment">
+    android:background="#FFC0CB"
+    tools:context=".SecondFragment">
 
     <TextView
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Only SMS containing this number"/>
-
+        android:text="Only SMS with this word"/>
+    
     <EditText
-        android:id="@+id/etNumber"
+        android:id="@+id/etWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
