@@ -2,6 +2,7 @@ package com.myapplicationdev.android.smsretrieverapp;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SecondFragment extends Fragment {
 
     EditText etSMS;
@@ -30,18 +35,23 @@ public class SecondFragment extends Fragment {
         etSMS = view.findViewById(R.id.etWord);
         btnRetrieve = view.findViewById(R.id.btnRetrieve);
         tvSMS = view.findViewById(R.id.tvSMS);
+        Context applicationContext = MainActivity.getContextOfApplication();
         btnRetrieve.setOnClickListener(v -> {
-            int permissionCheck = PermissionChecker.checkSelfPermission(SecondFragment.super.getContext(), Manifest.permission.READ_SMS);
-
-            if(permissionCheck != PermissionChecker.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(SecondFragment.super.getActivity(), new String[]{Manifest.permission.READ_SMS}, 0);
-                return;
-            }
             Uri uri = Uri.parse("content://sms");
             String[] reqCols = new String[]{"date", "address", "body", "type"};
-            ContentResolver cr = getActivity().getContentResolver();
-            String filter = "body LIKE ?";
+            ContentResolver cr = applicationContext.getContentResolver();
+            String[] messages = new String[0];
+            if (etSMS.getText().toString().contains(" ")) {
+                messages = etSMS.getText().toString().split(" ");
+            }
+            String filter = "body LIKE ? ";
             String[] filterArgs = {"%" + etSMS.getText().toString() + "%"};
+            if (messages.length > 1) {
+                for(String i: messages) {
+                    filter += "OR body LIKE ? ";
+                    filterArgs = addX(filterArgs, "%" + i + "%");
+                }
+            }
             Cursor cursor = cr.query(uri, reqCols, filter, filterArgs, null);
             String smsbody = "";
             if(cursor.moveToFirst()){
@@ -62,5 +72,17 @@ public class SecondFragment extends Fragment {
             tvSMS.setText(smsbody);
         });
         return view;
+    }
+
+    public static String[] addX( String arr[], String x)
+    {
+        List<String> arrlist
+                = new ArrayList<String>(
+                Arrays.asList(arr));
+
+        arrlist.add(x);
+        arr = arrlist.toArray(arr);
+
+        return arr;
     }
 }
