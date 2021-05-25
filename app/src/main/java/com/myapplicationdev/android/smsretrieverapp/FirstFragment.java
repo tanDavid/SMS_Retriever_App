@@ -3,6 +3,7 @@ package com.myapplicationdev.android.smsretrieverapp;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 
 public class FirstFragment extends Fragment {
     EditText etNumber;
-    Button btnRetrieve;
+    Button btnRetrieve, btnEmail;
     TextView tvSMS;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class FirstFragment extends Fragment {
         etNumber = view.findViewById(R.id.etNumber);
         btnRetrieve = view.findViewById(R.id.btnRetrieve);
         tvSMS = view.findViewById(R.id.tvSMS);
+        btnEmail = view.findViewById(R.id.btnEmail);
 
         btnRetrieve.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +79,26 @@ public class FirstFragment extends Fragment {
                     }while (cursor.moveToNext());
                 }
                 tvSMS.setText(smsBody);
+            }
+        });
+
+        btnEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                // Put essentials like email address, subject & body text
+                email.putExtra(Intent.EXTRA_EMAIL,
+                        new String[]{"andy_tao@rp.edu.sg"});
+                email.putExtra(Intent.EXTRA_SUBJECT,
+                        "Enter Subject");
+                email.putExtra(Intent.EXTRA_TEXT,
+                        tvSMS.getText());
+                // This MIME type indicates email
+                email.setType("message/rfc822");
+                // createChooser shows user a list of app that can handle
+                // this MIME type, which is, email
+                startActivity(Intent.createChooser(email,
+                        "Choose an Email client :"));
             }
         });
 
