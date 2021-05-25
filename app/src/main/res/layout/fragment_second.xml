@@ -4,29 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFC0CB"
     tools:context=".SecondFragment">
-
-    <TextView
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Only SMS with this word"/>
-    
-    <EditText
-        android:id="@+id/etWord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnRetrieve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Retrieve SMS" />
-
-    <TextView
-        android:id="@+id/tvSMS"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
 </LinearLayout>
